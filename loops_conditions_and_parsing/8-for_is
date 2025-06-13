@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# This script lists current directory files showing only the part after the first dash using a for loop
+
+for file in *; do
+  # Skip if file name doesn't contain a dash
+  if [[ "$file" == *-* ]]; then
+    # Extract substring after first dash
+    echo "${file#*-}"
+  else
+    # If no dash, print file as is
+    echo "$file"
+  fi
+done
