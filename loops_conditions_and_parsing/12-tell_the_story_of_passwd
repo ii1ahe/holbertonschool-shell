@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # cart curt cart
 while IFS=: read -r user pass uid gid gecos home shell
 do
