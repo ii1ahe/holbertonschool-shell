@@ -1,6 +1,22 @@
 #!/usr/bin/env bash
 # acascac 
-awk '{print $1, $9}' apache-access.log | \
-  sort | uniq -c | \
-  sort -nr | \
-  awk '{printf "%5d %s %s\n", $1, $2, $3}'
+awk '
+  # Her satırı işle
+  {
+    ip = $1
+
+    # Status code genellikle 9. alanda olur, ama emin olmak için kontrol ediyoruz
+    for (i=1; i<=NF; i++) {
+      if ($i ~ /^"[A-Z]+/) req_start = i   # "GET gibi istek başlangıcı
+      if ($(i-1) ~ /^"[A-Z]+/ && $i ~ /^[0-9]{3}$/) {
+        status = $i
+        break
+      }
+    }
+
+    # Eğer geçerli bir IP ve durum kodu bulduysak yaz
+    if (ip ~ /^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$/ && status ~ /^[0-9]{3}$/) {
+      print ip, status
+    }
+  }
+' apache-access.log | sort | uniq -c | sort -nr | awk '{printf "%d %s %s\n", $1, $2, $3}'
