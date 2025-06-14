@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# addasdasd
+# adasdasdad
 PID_FILE="/var/run/my_process.pid"
 PROCESS_SCRIPT="./manage_my_process"
 
@@ -31,4 +31,3 @@ case "$1" in
         echo "Usage: manage_my_process {start|stop|restart}"
         ;;
 esac
-
