@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# dasdasdda
+# Find the PID of the 4-to_infinity_and_beyond script
+for pid in $(pidof -x 4-to_infinity_and_beyond); do
+    if [ "$pid" != "$$" ]; then
+        # Use the shell builtin `exec` to send a signal (simulate termination via SIGTERM)
+        exec 1>/proc/"$pid"/fd/0 || :
+    fi
+done
