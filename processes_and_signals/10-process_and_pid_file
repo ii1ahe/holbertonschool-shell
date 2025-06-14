@@ -3,10 +3,13 @@
 # File path for PID file
 PID_FILE="/var/run/myscript.pid"
 
-# Write the current script's PID to the file
-echo $$ > "$PID_FILE"
+# Try to write PID to file, fail gracefully if permission denied
+if ! echo $$ > "$PID_FILE" 2>/dev/null; then
+    echo "Failed to write PID file. Are you running without root?"
+    exit 1
+fi
 
-# Signal handlers
+# Handlers
 handle_sigterm() {
     echo "I hate the kill command"
     cleanup_and_exit
@@ -21,7 +24,7 @@ cleanup_and_exit() {
     exit 0
 }
 
-# Trap signals
+# Set traps
 trap handle_sigterm SIGTERM
 trap handle_sigint SIGINT
 trap cleanup_and_exit SIGQUIT
