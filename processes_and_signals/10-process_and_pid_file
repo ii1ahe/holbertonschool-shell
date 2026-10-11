@@ -1,38 +1,30 @@
 #!/usr/bin/env bash
-# adasdasdasdasdas
 PID_FILE="/var/run/myscript.pid"
 
-# Function to clean up and exit
 cleanup_and_exit() {
     rm -f "$PID_FILE"
     exit 0
 }
 
-# Function to handle SIGINT
 handle_sigint() {
     echo "Y U no love me?!"
 }
 
-# Function to handle SIGTERM
 handle_sigterm() {
     echo "I hate the kill command"
     cleanup_and_exit
 }
 
-# Function to handle SIGQUIT
 handle_sigquit() {
     cleanup_and_exit
 }
 
-# Trap signals
 trap handle_sigint SIGINT
 trap handle_sigterm SIGTERM
 trap handle_sigquit SIGQUIT
 
-# Create the PID file with current PID
 echo $$ > "$PID_FILE"
 
-# Infinite loop
 while true; do
     echo "To infinity and beyond"
     sleep 1

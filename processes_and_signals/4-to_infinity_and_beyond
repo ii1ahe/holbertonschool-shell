@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# dasdad
 while true; do
     echo "To infinity and beyond"
     sleep 2
